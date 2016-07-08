@@ -1,0 +1,30 @@
+{
+  "name": "buba",
+  "description": "Buble + little bit of babel for your esnext tests",
+  "version": "1.0.0",
+  "author": "David Chase <davidchase03@gmail.com>",
+  "dependencies": {
+    "babel-core": "6.10.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.10.3",
+    "buble": "0.12.4"
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "mocha": "2.5.3",
+    "tape": "4.6.0"
+  },
+  "keywords": [
+    "babel",
+    "buble",
+    "es6",
+    "esnext",
+    "harmony",
+    "testings",
+    "tests"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape --require ./index test/** | faucet"
+  }
+}
