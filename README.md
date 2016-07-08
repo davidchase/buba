@@ -33,5 +33,5 @@ With `mocha` you can also provide buba within the `mocha.opts` config file:
 ```
 
 ## Todo
-- [ ] Add Tests
-- [ ] Add Bublé options
+- [x] Add Tests
+- [x] Add Bublé options
