@@ -1,9 +1,11 @@
 # buba
-Transform your esnext tests with Bublé + a little bit of Babel
+Bublé transform for your esnext tests + a little bit of Babel
 
 
 ## Why?
 Because a wise man once said your source code should be transpiled with same tool as your tests to avoid any hidden bugs.
+
+The usecase would be transpiling es* source code with Bublé and have tests match as well. An alternative to using `babel-register`
 
 The primary transformer here is [Bublé](buble.surge.sh/#) we only use [Babel](babeljs.io) for support with module import/exports.
 
