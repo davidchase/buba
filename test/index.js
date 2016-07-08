@@ -1,16 +1,16 @@
 import test from 'tape'
-import {sum, head} from './prelude'
-import {add, Circle, sum as sampleSum} from './sample'
+import { sum, head } from './prelude'
+import { add, Circle, sum as sampleSum } from './sample'
 
 test('sum should add up the list', t => {
-    t.plan(2)
-    t.equal(sum([1, 2, 3]), 6)
-    t.equal(sum([4, 5, 6]), 15)
+  t.plan(2)
+  t.equal(sum([1, 2, 3]), 6)
+  t.equal(sum([4, 5, 6]), 15)
 })
 
 test('head should get 1st item in list', t => {
-   t.plan(1)
-   t.equal(head([10, 100, 200, 400]), 10)
+  t.plan(1)
+  t.equal(head([10, 100, 200, 400]), 10)
 })
 
 test('add should add two values', t => {
@@ -19,10 +19,10 @@ test('add should add two values', t => {
 })
 
 test('Circle should have properties on the prototype', t => {
-    const circle = new Circle()
-    t.plan(2)
-    t.equal(typeof Circle.prototype.area, 'function')
-    t.ok(circle.area)
+  const circle = new Circle()
+  t.plan(2)
+  t.equal(typeof Circle.prototype.area, 'function')
+  t.ok(circle.area)
 })
 
 test('sampleSum should be the same as sum', t => {

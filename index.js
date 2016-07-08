@@ -19,7 +19,7 @@ const original = require.extensions['.js']
 
 const compile = (module, filename) => module._compile(transform(transformFileSync(filename).code, bubleOpts).code, filename)
 
-const compileEachExtension = ext => require.extensions[ext] = (module, filename) => shouldSkip(filename) ? original(module, filename) : compile(module, filename)
+const compileEachExtension = ext => require.extensions[ext] = (module, filename) => shouldSkip(filename) ? original(module, filename) : compile(module, filename) // eslint-disable-line no-return-assign
 
 EXTENSIONS.forEach(compileEachExtension)
 

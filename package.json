@@ -3,17 +3,21 @@
   "description": "Buble + little bit of babel for your esnext tests",
   "version": "1.0.0",
   "author": "David Chase <davidchase03@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/davidchase/buba/issues"
+  },
   "dependencies": {
     "babel-core": "6.10.4",
     "babel-plugin-transform-es2015-modules-commonjs": "6.10.3",
     "buble": "0.12.4"
   },
   "devDependencies": {
-    "faucet": "0.0.1",
     "mocha": "2.5.3",
     "standard": "7.1.2",
+    "tap-spec": "4.1.1",
     "tape": "4.6.0"
   },
+  "homepage": "https://github.com/davidchase/buba#readme",
   "keywords": [
     "babel",
     "buble",
@@ -25,9 +29,13 @@
   ],
   "license": "MIT",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidchase/buba.git"
+  },
   "scripts": {
-    "test": "tape --require ./index test/index.js | faucet && npm run test-options && npm run test-mocha",
-    "test-options": "tape test/options.js | faucet",
-    "test-mocha": "_mocha test/mocha.js"
+    "test": "standard && tape --require ./index test/index.js | tap-spec && npm run test-options  && npm run test-mocha",
+    "test-mocha": "_mocha test/mocha.js",
+    "test-options": "tape test/options.js | tap-spec"
   }
 }

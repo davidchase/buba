@@ -1,16 +1,15 @@
-
-import {sum} from './prelude'
+import { sum } from './prelude'
 
 const add = (a, b) => a + b
 
 class Circle {
-    constructor(radius) {
-        this.radius = this
-    }
+  constructor (radius) {
+    this.radius = this
+  }
 
-    area() {
-        return Math.PI * Math.pow(this.radius, 2)
-    }
+  area () {
+    return Math.PI * Math.pow(this.radius, 2)
+  }
 }
 
-export {add, Circle, sum}
+export { add, Circle, sum }
