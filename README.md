@@ -1,5 +1,5 @@
 # buba
-Bublé + a little bit of Babel for your esnext tests
+Transform your esnext tests with Bublé + a little bit of Babel
 
 
 ## Why?
