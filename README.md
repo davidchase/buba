@@ -34,6 +34,16 @@ With `mocha` you can also provide buba within the `mocha.opts` config file:
  --ui bdd
 ```
 
+Currently we only plan to use Babel for modules with `.babelrc` however you copy it to your project and augment with plugins as you see fit
+
+For example we add support for generators like so:
+```sh
+{
+  "plugins": [["transform-es2015-modules-commonjs"], ["transform-regenerator"]]
+}
+```
+
+
 ## Todo
 - [x] Add Tests
 - [x] Add Bublé options
