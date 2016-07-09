@@ -1,7 +1,7 @@
 {
   "name": "buba",
   "description": "Buble + little bit of babel for your esnext tests",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "David Chase <davidchase03@gmail.com>",
   "bugs": {
     "url": "https://github.com/davidchase/buba/issues"
