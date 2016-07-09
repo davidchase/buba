@@ -1,6 +1,8 @@
 # buba
 Bublé transform for your esnext tests + a little bit of Babel
 
+[![Build Status](https://travis-ci.org/davidchase/buba.svg?branch=master)](https://travis-ci.org/davidchase/buba) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![npm version](https://img.shields.io/npm/v/buba.svg)](https://www.npmjs.com/package/buba)
 
 ## Why?
 Because a wise man once said your source code should be transpiled with same tool as your tests to avoid any hidden bugs.
