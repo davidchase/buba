@@ -47,3 +47,4 @@ For example we add support for generators like so:
 ## Todo
 - [x] Add Tests
 - [x] Add Bublé options
+- [ ] Add CLI supoort
