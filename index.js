@@ -25,7 +25,7 @@ const compile = function (module, filename) {
       plugins: [babelPlugin]
     }).code, bubleOpts).code, filename)
   } catch (err) {
-    console.trace(err)
+    console.error(err.stack)
   }
 }
 
