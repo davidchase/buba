@@ -2,7 +2,7 @@
 
 const transformFileSync = require('babel-core').transformFileSync
 const transform = require('buble').transform
-const babelPlugin = require('babel-plugin-transform-es2015-modules-commonjs');
+const babelPlugin = require('babel-plugin-transform-es2015-modules-commonjs')
 
 const contains = (a, b) => a.indexOf(b) > 0
 
