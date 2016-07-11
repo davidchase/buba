@@ -5,3 +5,4 @@ logs
 npm-debug.log*
 # IDEs
 /.idea/
+coverage
