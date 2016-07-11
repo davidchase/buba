@@ -2,6 +2,7 @@
 
 const transformFileSync = require('babel-core').transformFileSync
 const transform = require('buble').transform
+const babelPlugin = require('babel-plugin-transform-es2015-modules-commonjs');
 
 const contains = (a, b) => a.indexOf(b) > 0
 
@@ -21,7 +22,7 @@ const original = require.extensions['.js']
 const compile = function (module, filename) {
   try {
     module._compile(transform(transformFileSync(filename, {
-      plugins: ['transform-es2015-modules-commonjs']
+      plugins: [babelPlugin]
     }).code, bubleOpts).code, filename)
   } catch (err) {
     console.trace(err)
