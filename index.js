@@ -24,7 +24,7 @@ const compile = function (module, filename) {
       plugins: ['transform-es2015-modules-commonjs']
     }).code, bubleOpts).code, filename)
   } catch (err) {
-    console.trace(err)
+    console.error(err.stack)
   }
 }
 
