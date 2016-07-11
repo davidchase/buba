@@ -20,7 +20,9 @@ const original = require.extensions['.js']
 
 const compile = function (module, filename) {
   try {
-    module._compile(transform(transformFileSync(filename).code, bubleOpts).code, filename)
+    module._compile(transform(transformFileSync(filename, {
+      plugins: ['transform-es2015-modules-commonjs']
+    }).code, bubleOpts).code, filename)
   } catch (err) {
     console.trace(err)
   }
