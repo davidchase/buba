@@ -9,7 +9,8 @@ const EXTENSIONS = ['.js', '.es', '.es6']
 
 const bubleOpts = {
   transforms: {
-    dangerousForOf: true
+    dangerousForOf: true,
+    generator: false
   }
 }
 
