@@ -3,8 +3,8 @@
 
 [![Build Status](https://travis-ci.org/davidchase/buba.svg?branch=master)](https://travis-ci.org/davidchase/buba) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![npm version](https://img.shields.io/npm/v/buba.svg)](https://www.npmjs.com/package/buba)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b3b512a5e0854a98bea75538647e84c4)](https://www.codacy.com/app/davidchase/buba?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=davidchase/buba&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/b3b512a5e0854a98bea75538647e84c4)](https://www.codacy.com/app/davidchase/buba?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=davidchase/buba&amp;utm_campaign=Badge_Coverage)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 ## Why?
 Because a wise man once said your source code should be transpiled with same tool as your tests to avoid any hidden bugs.
