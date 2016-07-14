@@ -38,6 +38,15 @@ With `mocha` you can also provide buba within the `mocha.opts` config file:
 
 Currently we only plan to use Babel for modules but you can add support for something like generators by adding a `.babelrc` file.
 
+### Programmatic Usage
+
+Just make sure that `buba` is the 1st thing you require
+
+```js
+require('buba')
+const prelude = require('./prelude') // prelude has import/export, arrow functions, etc
+```
+
 
 ## Todo
 - [x] Add Tests
