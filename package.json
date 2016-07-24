@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "babel-core": "6.10.4",
-    "babel-plugin-transform-es2015-modules-commonjs": "6.10.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.11.5",
     "buble": "0.12.5"
   },
   "devDependencies": {
