@@ -42,7 +42,7 @@
     "url": "git+https://github.com/davidchase/buba.git"
   },
   "scripts": {
-    "test": "standard && istanbul cover -- tape --require ./index test/index.js | tap-spec && npm run test-options  && npm run test-mocha",
+    "test": "standard && istanbul cover -- tape --require ./register/index test/index.js | tap-spec && npm run test-options  && npm run test-mocha",
     "test-mocha": "_mocha test/mocha.js",
     "test-options": "tape test/options.js | tap-spec"
   }
