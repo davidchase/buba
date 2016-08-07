@@ -39,7 +39,7 @@ cli.main(function main (args, options) {
 
   createDirectoryForFile(options.out, () => {
     writeFile(options.out, code)
-  
+
     if (options.sourceMaps && options.out) {
       writeFile(options.out + '.map', map)
     }
@@ -57,11 +57,14 @@ function transformDirectory (inDirectory, outDirectory, sourceMaps) {
       const _outfile = path.join(_out, file)
 
       if (isFile(_infile)) {
-
         const { code, map } = transformFile(_infile) // TODO add options
 
         writeFile(_outfile, code)
-      } 
+
+        if (sourceMaps) {
+          writeFile(path.join(_outfile, '.map'), map)
+        }
+      }
     })
   })
 }
@@ -74,7 +77,7 @@ function writeFile (filename, content) {
 
 function createDirectoryForFile (filename, cb) {
   const parts = filename.split('/')
-  const file = parts.splice(-1)
+  parts.splice(-1)
   const dir = path.join(CWD, parts.join('/'))
 
   mkdirp(dir, (err) => {
@@ -104,12 +107,12 @@ function isFile (path) {
 
 function ext (filename) {
   if (/^\..+$/.test(filename) && filename.match(/\./g).length === 1) {
-    return filename.substring(1);
+    return filename.substring(1)
   }
 
   const parts = filename.split('.')
   if (parts.length === 1 || (parts[0] === '' && parts.length === 2)) {
-    return ""
+    return ''
   }
 
   return parts.pop()
