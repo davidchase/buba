@@ -35,7 +35,7 @@ cli.main(function main (args, options) {
 
   const output = transformFile(options.in) // TODO: add options
 
-  if (!options.out) { return console.log(code) }
+  if (!options.out) { return console.log(output.code) }
 
   createDirectoryForFile(options.out, () => {
     writeFile(options.out, output.code)
