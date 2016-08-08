@@ -35,6 +35,8 @@ cli.main(function main (args, options) {
 
   const output = transformFile(options.in) // TODO: add options
 
+  if (!output) return
+
   if (!options.out) { return console.log(output.code) }
 
   createDirectoryForFile(options.out, () => {
@@ -98,11 +100,19 @@ function getAllInDirectory (path, cb) {
 }
 
 function isDirectory (path) {
-  return fs.statSync(path).isDirectory()
+  try {
+    return fs.statSync(path).isDirectory()
+  } catch (e) {
+    console.error('Given path:', path, 'does not exist')
+  }
 }
 
 function isFile (path) {
-  return fs.statSync(path).isFile()
+  try {
+    return fs.statSync(path).isFile()
+  } catch (e) {
+    console.error('Given path:', path, 'does not exist')
+  }
 }
 
 function ext (filename) {
