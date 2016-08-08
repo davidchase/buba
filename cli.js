@@ -8,7 +8,7 @@ const process = require('process')
 const cli = require('cli')
 const mkdirp = require('mkdirp')
 
-const { transformFile } = require('./index')
+const transformFile = require('./index').transformFile
 
 const CWD = process.cwd()
 
@@ -33,15 +33,15 @@ cli.main(function main (args, options) {
     return transformDirectory(options.in, options.out, options.sourceMaps)
   }
 
-  const { code, map } = transformFile(options.in) // TODO: add options
+  const output = transformFile(options.in) // TODO: add options
 
   if (!options.out) { return console.log(code) }
 
   createDirectoryForFile(options.out, () => {
-    writeFile(options.out, code)
+    writeFile(options.out, output.code)
 
     if (options.sourceMaps && options.out) {
-      writeFile(options.out + '.map', map)
+      writeFile(options.out + '.map', output.map)
     }
   })
 })
@@ -57,12 +57,12 @@ function transformDirectory (inDirectory, outDirectory, sourceMaps) {
       const _outfile = path.join(_out, file)
 
       if (isFile(_infile)) {
-        const { code, map } = transformFile(_infile) // TODO add options
+        const output = transformFile(_infile) // TODO add options
 
-        writeFile(_outfile, code)
+        writeFile(_outfile, output.code)
 
         if (sourceMaps) {
-          writeFile(path.join(_outfile, '.map'), map)
+          writeFile(path.join(_outfile, '.map'), output.map)
         }
       }
     })

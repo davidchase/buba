@@ -19,9 +19,7 @@ const transformFile = function (filename, options = {}) {
   const babelOptions = options.babel ? Object.assign({}, babelOpts, options.babel) : babelOpts
   const bubleOptions = options.buble ? Object.assign({}, bubleOptions, options.buble) : bubleOpts
 
-  const { code: babelCode } = transformFileSync(filename, babelOptions)
-
-  return transform(babelCode, bubleOptions)
+  return transform(transformFileSync(filename, babelOptions).code, bubleOptions)
 }
 
 module.exports = {
