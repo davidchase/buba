@@ -1,5 +1,5 @@
 # buba
-> Bublé transform for your esnext tests + a little bit of Babel
+> Bublé transform + a little bit of Babel
 
 [![Build Status](https://travis-ci.org/davidchase/buba.svg?branch=master)](https://travis-ci.org/davidchase/buba) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 [![npm version](https://img.shields.io/npm/v/buba.svg)](https://www.npmjs.com/package/buba)
@@ -22,28 +22,50 @@ npm install buba --save-dev
 
 ## Usage
 
+### Source code
+
+**CLI**
 ```sh
-mocha --require buba tests/**/*.js
+buba -i input.js -o output.js
+# or with a directory
+buba -i src/ -o lib/
+# to enable sourceMaps
+buba -i input.js -o output.js -s
+```
+
+**API Usage**
+```js
+import { transformFile } from 'buba'
+
+const { code, map } = transformFile('input.js', {
+  buble: {} // buble options
+  babel: {} // babel options
+})
+```
+
+### Tests
+```sh
+mocha --require buba/register tests/**/*.js
 # or
-tape --require buba tests/**/*.js
+tape --require buba/register tests/**/*.js
 ```
 
 With `mocha` you can also provide buba within the `mocha.opts` config file:
 
 ```sh
- --require buba
+ --require buba/register
  --reporter spec
  --ui bdd
 ```
 
 Currently we only plan to use Babel for modules but you can add support for something like generators by adding a `.babelrc` file.
 
-### API Usage
+**API Usage**
 
 Just make sure that `buba` is the 1st thing you require
 
 ```js
-require('buba')
+require('buba/register')
 const prelude = require('./prelude') // prelude has import/export, arrow functions, etc
 ```
 

@@ -1,4 +1,4 @@
-require('../index')({
+require('../register')({
   arrow: false
 })
 const test = require('tape')

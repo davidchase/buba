@@ -4,9 +4,9 @@ const transformFileSync = require('babel-core').transformFileSync
 const transform = require('buble').transform
 const babelPlugin = require('babel-plugin-transform-es2015-modules-commonjs')
 
-const contains = (a, b) => a.indexOf(b) > 0
-
-const EXTENSIONS = ['.js', '.es', '.es6']
+const babelOpts = {
+  plugins: [ babelPlugin ]
+}
 
 const bubleOpts = {
   transforms: {
@@ -15,22 +15,18 @@ const bubleOpts = {
   }
 }
 
-const shouldSkip = file => contains(file, 'node_modules')
+const transformFile = function (filename, options = {}) {
+  const babelOptions = options.babel ? Object.assign({}, babelOpts, options.babel) : babelOpts
+  const bubleOptions = options.buble ? Object.assign({}, bubleOptions, options.buble) : bubleOpts
 
-const original = require.extensions['.js']
-
-const compile = function (module, filename) {
   try {
-    module._compile(transform(transformFileSync(filename, {
-      plugins: [babelPlugin]
-    }).code, bubleOpts).code, filename)
-  } catch (err) {
-    console.error(err.stack)
+    const output = transform(transformFileSync(filename, babelOptions).code, bubleOptions)
+    return output
+  } catch (e) {
+    console.error('Failed to transform file :', filename)
   }
 }
 
-const compileEachExtension = ext => require.extensions[ext] = (module, filename) => shouldSkip(filename) ? original(module, filename) : compile(module, filename) // eslint-disable-line no-return-assign
-
-EXTENSIONS.forEach(compileEachExtension)
-
-module.exports = opts => Object.assign(bubleOpts.transforms, opts)
+module.exports = {
+  transformFile
+}
