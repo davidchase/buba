@@ -15,7 +15,8 @@ const bubleOpts = {
   }
 }
 
-const transformFile = function (filename, options = {}) {
+const transformFile = function (filename, options) {
+  options = options || {}
   const babelOptions = options.babel ? Object.assign({}, babelOpts, options.babel) : babelOpts
   const bubleOptions = options.buble ? Object.assign({}, bubleOptions, options.buble) : bubleOpts
 
