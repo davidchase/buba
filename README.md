@@ -73,4 +73,4 @@ const prelude = require('./prelude') // prelude has import/export, arrow functio
 ## Todo
 - [x] Add Tests
 - [x] Add Bublé options
-- [ ] Add CLI supoort
+- [x] Add CLI supoort - thanks [@TylorS](https://github.com/TylorS)
