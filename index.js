@@ -24,7 +24,7 @@ const transformFile = function (filename, options) {
     const output = transform(transformFileSync(filename, babelOptions).code, bubleOptions)
     return output
   } catch (e) {
-    console.error('Failed to transform file :', filename)
+    console.error('Failed to transform file :', filename, e)
   }
 }
 
