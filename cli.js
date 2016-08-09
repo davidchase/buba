@@ -12,7 +12,7 @@ const transformFile = require('./index').transformFile
 
 const CWD = process.cwd()
 
-const extensions = ['js', 'es', 'es6']
+const extensions = ['.js', '.es', '.es6']
 
 cli.parse({
   in: ['i', 'The file or directory you would like to transform (required)', 'string'],
@@ -49,14 +49,18 @@ cli.main(function main (args, options) {
 })
 
 function transformDirectory (inDirectory, outDirectory, sourceMaps) {
-  const _in = path.join(CWD, inDirectory)
-  const _out = path.join(CWD, outDirectory)
+  const _in = path.isAbsolute(inDirectory) ? inDirectory : path.join(CWD, inDirectory)
+  const _out = path.isAbsolute(outDirectory) ? outDirectory : path.join(CWD, outDirectory)
   mkdirp(_out, function (err) {
     if (err) throw err
 
     getAllInDirectory(inDirectory, function (file) {
       const _infile = path.join(_in, file)
       const _outfile = path.join(_out, file)
+
+      if (isDirectory(_infile)) {
+        transformDirectory(_infile, _outfile, sourceMaps)
+      }
 
       if (isFile(_infile)) {
         const output = transformFile(_infile) // TODO add options
@@ -88,42 +92,31 @@ function createDirectoryForFile (filename, cb) {
   })
 }
 
-function getAllInDirectory (path, cb) {
-  const files = fs.readdirSync(path)
+function getAllInDirectory (pathname, cb) {
+  const files = fs.readdirSync(pathname)
   for (let i = 0; i < files.length; ++i) {
-    const file = files[i]
-    const shouldProcess = extensions.indexOf(ext(file)) > -1
+    const filename = path.basename(files[i])
+    const file = path.join(pathname, filename)
+    const ext = path.extname(file)
+    const shouldProcess = isFile(file) && extensions.indexOf(ext) > -1 || isDirectory(file)
     if (shouldProcess) {
-      cb(file)
+      cb(filename)
     }
   }
 }
 
-function isDirectory (path) {
+function isDirectory (pathname) {
   try {
-    return fs.statSync(path).isDirectory()
+    return fs.statSync(pathname).isDirectory()
   } catch (e) {
-    console.error('Given path:', path, 'does not exist')
+    console.error('Given path:', pathname, 'could not be found')
   }
 }
 
-function isFile (path) {
+function isFile (pathname) {
   try {
-    return fs.statSync(path).isFile()
+    return fs.statSync(pathname).isFile()
   } catch (e) {
-    console.error('Given path:', path, 'does not exist')
+    console.error('Given path:', pathname, 'could not be found')
   }
-}
-
-function ext (filename) {
-  if (/^\..+$/.test(filename) && filename.match(/\./g).length === 1) {
-    return filename.substring(1)
-  }
-
-  const parts = filename.split('.')
-  if (parts.length === 1 || (parts[0] === '' && parts.length === 2)) {
-    return ''
-  }
-
-  return parts.pop()
 }
