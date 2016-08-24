@@ -23,7 +23,7 @@
     "cz-conventional-changelog": "1.1.6",
     "istanbul": "0.4.4",
     "mocha": "3.0.1",
-    "standard": "7.1.2",
+    "standard": "8.0.0",
     "tap-spec": "4.1.1",
     "tape": "4.6.0"
   },
