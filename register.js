@@ -20,13 +20,9 @@ const shouldSkip = file => contains(file, 'node_modules')
 const original = require.extensions['.js']
 
 const compile = function (module, filename) {
-  try {
-    module._compile(transform(transformFileSync(filename, {
-      plugins: [babelPlugin]
-    }).code, bubleOpts).code, filename)
-  } catch (err) {
-    console.error(err.stack)
-  }
+  module._compile(transform(transformFileSync(filename, {
+    plugins: [babelPlugin]
+  }).code, bubleOpts).code, filename)
 }
 
 const compileEachExtension = ext => require.extensions[ext] = (module, filename) => shouldSkip(filename) ? original(module, filename) : compile(module, filename) // eslint-disable-line no-return-assign
