@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const process = require('process')
 
-const cli = require('cli')
+const program = require('commander')
 const mkdirp = require('mkdirp')
 
 const transformFile = require('./index').transformFile
@@ -14,41 +14,57 @@ const CWD = process.cwd()
 
 const extensions = ['.js', '.es', '.es6']
 
-cli.parse({
-  in: ['i', 'The file or directory you would like to transform (required)', 'string'],
-  out: ['o', 'Where to write output', 'string'],
-  sourceMaps: ['s', 'Output sourceMap']
-})
+const head = xs => xs[0]
 
-cli.main(function main (args, options) {
-  if (!options.in) {
-    throw new Error('Must provide an input file or directory')
+const compose = (f, g) => h => f(g(h))
+
+const isFile = function isFile (pathname) {
+  try {
+    return fs.statSync(pathname).isFile()
+  } catch (e) {
+    console.error('Given path:', pathname, 'could not be found')
   }
+}
 
-  if (isDirectory(options.in)) {
-    if (!options.out) {
-      throw new Error('Must provide an output directory when transforming a directory')
-    }
-
-    return transformDirectory(options.in, options.out, options.sourceMaps)
+const isDirectory = function isDirectory (pathname) {
+  try {
+    return fs.statSync(pathname).isDirectory()
+  } catch (e) {
+    console.error('Given path:', pathname, 'could not be found')
   }
+}
 
-  const output = transformFile(options.in) // TODO: add options
-
-  if (!output) return
-
-  if (!options.out) { return console.log(output.code) }
-
-  createDirectoryForFile(options.out, () => {
-    writeFile(options.out, output.code)
-
-    if (options.sourceMaps && options.out) {
-      writeFile(options.out + '.map', output.map)
+const getAllInDirectory = function getAllInDirectory (pathname, cb) {
+  const files = fs.readdirSync(pathname)
+  for (let i = 0; i < files.length; ++i) {
+    const filename = path.basename(files[i])
+    const file = path.join(pathname, filename)
+    const ext = path.extname(file)
+    const shouldProcess = isFile(file) && extensions.indexOf(ext) > -1 || isDirectory(file)
+    if (shouldProcess) {
+      cb(filename)
     }
+  }
+}
+
+const createDirectoryForFile = function createDirectoryForFile (filename, cb) {
+  const parts = filename.split('/')
+  parts.splice(-1)
+  const dir = path.join(CWD, parts.join('/'))
+
+  mkdirp(dir, (err) => {
+    if (err) throw err
+    cb()
   })
-})
+}
 
-function transformDirectory (inDirectory, outDirectory, sourceMaps) {
+const writeFile = function writeFile (filename, content) {
+  fs.writeFile(filename, content, (err) => {
+    if (err) throw err
+  })
+}
+
+const transformDirectory = function transformDirectory (inDirectory, outDirectory, sourceMaps) {
   const _in = path.isAbsolute(inDirectory) ? inDirectory : path.join(CWD, inDirectory)
   const _out = path.isAbsolute(outDirectory) ? outDirectory : path.join(CWD, outDirectory)
   mkdirp(_out, function (err) {
@@ -75,48 +91,39 @@ function transformDirectory (inDirectory, outDirectory, sourceMaps) {
   })
 }
 
-function writeFile (filename, content) {
-  fs.writeFile(filename, content, (err) => {
-    if (err) throw err
-  })
+const setupOptions = function (argv) {
+  return program
+    .version(require('./package.json').version)
+    .usage('<file input> [options]')
+    .option('-o --output [string]', 'Where to write the output')
+    .option('-s --source-maps', 'Output source-maps')
+    .parse(argv)
 }
 
-function createDirectoryForFile (filename, cb) {
-  const parts = filename.split('/')
-  parts.splice(-1)
-  const dir = path.join(CWD, parts.join('/'))
+const parseOptions = function (program) {
+  if (!program.args.length) {
+    console.error('Oops: Must provide an input file or directory')
+    program.help()
+  }
 
-  mkdirp(dir, (err) => {
-    if (err) throw err
-    cb()
-  })
-}
-
-function getAllInDirectory (pathname, cb) {
-  const files = fs.readdirSync(pathname)
-  for (let i = 0; i < files.length; ++i) {
-    const filename = path.basename(files[i])
-    const file = path.join(pathname, filename)
-    const ext = path.extname(file)
-    const shouldProcess = isFile(file) && extensions.indexOf(ext) > -1 || isDirectory(file)
-    if (shouldProcess) {
-      cb(filename)
+  if (isDirectory(head(program.args))) {
+    if (!program.output) {
+      throw new Error('Must provide an output directory when transforming a directory')
     }
+    return transformDirectory(head(program.args), program.output, program.sourceMap)
   }
+
+  const output = transformFile(head(program.args))
+
+  if (!program.output) return console.log(output.code)
+
+  createDirectoryForFile(program.output, function () {
+    writeFile(program.output, output.code)
+
+    if (program.sourceMaps && program.output) {
+      writeFile(program.output + '.map', output.map)
+    }
+  })
 }
 
-function isDirectory (pathname) {
-  try {
-    return fs.statSync(pathname).isDirectory()
-  } catch (e) {
-    console.error('Given path:', pathname, 'could not be found')
-  }
-}
-
-function isFile (pathname) {
-  try {
-    return fs.statSync(pathname).isFile()
-  } catch (e) {
-    console.error('Given path:', pathname, 'could not be found')
-  }
-}
+compose(parseOptions, setupOptions)(process.argv)
