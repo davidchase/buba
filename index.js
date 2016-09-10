@@ -17,7 +17,7 @@ const bubleOpts = {
 
 const transformFile = function (filename, options) {
   options = options || {}
-  const babelOptions = Object.assign({}, babelOpts, options.babel) 
+  const babelOptions = Object.assign({}, babelOpts, options.babel)
   const bubleOptions = Object.assign({}, bubleOpts, options.buble)
 
   try {
@@ -29,5 +29,4 @@ const transformFile = function (filename, options) {
 }
 
 module.exports = {
-  transformFile
-}
+transformFile}
