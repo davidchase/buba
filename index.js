@@ -17,8 +17,8 @@ const bubleOpts = {
 
 const transformFile = function (filename, options) {
   options = options || {}
-  const babelOptions = options.babel ? Object.assign({}, babelOpts, options.babel) : babelOpts
-  const bubleOptions = options.buble ? Object.assign({}, bubleOptions, options.buble) : bubleOpts
+  const babelOptions = Object.assign({}, babelOpts, options.babel) 
+  const bubleOptions = Object.assign({}, bubleOpts, options.buble)
 
   try {
     const output = transform(transformFileSync(filename, babelOptions).code, bubleOptions)
