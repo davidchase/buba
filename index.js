@@ -29,4 +29,5 @@ const transformFile = function (filename, options) {
 }
 
 module.exports = {
-transformFile}
+  transformFile
+}
