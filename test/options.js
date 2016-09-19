@@ -1,5 +1,9 @@
 require('../register')({
-  arrow: false
+  buble: {
+    transforms: {
+      arrow: false
+    }
+  }
 })
 const test = require('tape')
 
