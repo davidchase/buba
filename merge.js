@@ -1,3 +1,5 @@
+'use strict'
+
 const merge = (target, src) => {
   const isArray = Array.isArray(src)
   let destination = isArray && [] || {}
