@@ -5,8 +5,8 @@ const transform = require('buble').transform
 const babelPlugin = require('babel-plugin-transform-es2015-modules-commonjs')
 
 const merge = (target, src) => {
-  var isArray = Array.isArray(src)
-  var destination = isArray && [] || {}
+  const isArray = Array.isArray(src)
+  let destination = isArray && [] || {}
   if (isArray) {
     target = target || []
     destination = destination.concat(target)
