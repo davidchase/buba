@@ -3,23 +3,43 @@
 const transformFileSync = require('babel-core').transformFileSync
 const transform = require('buble').transform
 const babelPlugin = require('babel-plugin-transform-es2015-modules-commonjs')
-const mergeWith = require('lodash/mergeWith')
 
-const deepMerge = (dest, src) => {
-  if (!dest || !src) {
-    return
-  }
-  return mergeWith(dest, src, (a, b) => {
-    if (b && Array.isArray(a)) {
-      let newArray = b.slice(0)
-      for (let item of a) {
-        if (newArray.indexOf(item) < 0) {
-          newArray.push(item)
+const merge = (target, src) => {
+  var isArray = Array.isArray(src)
+  var destination = isArray && [] || {}
+  if (isArray) {
+    target = target || []
+    destination = destination.concat(target)
+    src.forEach((e, i) => {
+      if (typeof destination[i] === 'undefined') {
+        destination[i] = e
+      } else if (typeof e === 'object') {
+        destination[i] = merge(target[i], e)
+      } else {
+        if (target.indexOf(e) === -1) {
+          destination.push(e)
         }
       }
-      return newArray
+    })
+  } else {
+    if (target && typeof target === 'object') {
+      Object.keys(target).forEach((key) => {
+        destination[key] = target[key]
+      })
     }
-  })
+    Object.keys(src).forEach((key) => {
+      if (typeof src[key] !== 'object' || !src[key]) {
+        destination[key] = src[key]
+      } else {
+        if (!target[key]) {
+          destination[key] = src[key]
+        } else {
+          destination[key] = merge(target[key], src[key])
+        }
+      }
+    })
+  }
+  return destination
 }
 
 const contains = (a, b) => a.indexOf(b) > 0
@@ -50,4 +70,6 @@ const compileEachExtension = ext => require.extensions[ext] = (module, filename)
 
 EXTENSIONS.forEach(compileEachExtension)
 
-module.exports = opts => deepMerge(options, opts)
+module.exports = opts => {
+  options = merge(options, opts)
+}
