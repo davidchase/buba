@@ -5,11 +5,11 @@ const transform = require('buble').transform
 const babelPlugin = require('babel-plugin-transform-es2015-modules-commonjs')
 const mergeWith = require('lodash/mergeWith')
 
-function deepMerge (dest, src) {
+const deepMerge = (dest, src) => {
   if (!dest || !src) {
     return
   }
-  return mergeWith(dest, src, function (a, b) {
+  return mergeWith(dest, src, (a, b) => {
     if (b && Array.isArray(a)) {
       let newArray = b.slice(0)
       for (let item of a) {
