@@ -1,7 +1,7 @@
 {
   "name": "buba",
   "description": "Buble + little bit of babel for your esnext tests",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "author": "David Chase <davidchase03@gmail.com>",
   "bin": {
     "buba": "cli.js"
