@@ -28,7 +28,7 @@
     "mocha": "3.0.2",
     "standard": "8.1.0",
     "tap-spec": "4.1.1",
-    "tape": "4.6.0"
+    "tape": "4.6.1"
   },
   "homepage": "https://github.com/davidchase/buba#readme",
   "keywords": [
