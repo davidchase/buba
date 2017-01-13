@@ -11,7 +11,7 @@ Because a wise man once said your source code should be transpiled with same too
 
 The usecase would be transpiling es* source code with Bublé and have tests match as well. An alternative to using `babel-register`
 
-The primary transformer here is [Bublé](buble.surge.sh/#) we only use [Babel](babeljs.io) for support with module import/exports.
+The primary transformer here is [Bublé](https://buble.surge.sh/#) we only use [Babel](https://babeljs.io) for support with module import/exports.
 
 
 ## Install
